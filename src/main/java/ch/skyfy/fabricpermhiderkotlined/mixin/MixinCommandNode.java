@@ -2,7 +2,7 @@ package ch.skyfy.fabricpermhiderkotlined.mixin;
 
 import ch.skyfy.fabricpermhiderkotlined.ducks.CommandNodeDuck;
 //import ch.skyfy.fabricpermhiderkotlined.utils.CommandHider;
-import ch.skyfy.fabricpermhiderkotlined.utils.CommandHider2;
+import ch.skyfy.fabricpermhiderkotlined.utils.CommandHider;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.RedirectModifier;
 import com.mojang.brigadier.tree.CommandNode;
@@ -128,11 +128,11 @@ public abstract class MixinCommandNode<S> implements CommandNodeDuck<S> {
 
 			for (RootCommandNode<S> root : ancestries.keySet()) {
 				// noinspection unchecked
-				String prefix = CommandHider2.getPrefix(commandSource, (RootCommandNode<CommandSource>) root, (CommandNode<CommandSource>) (Object) this);
+				String prefix = CommandHider.getPrefix(commandSource, (RootCommandNode<CommandSource>) root, (CommandNode<CommandSource>) (Object) this);
 				if (prefix == null) continue;
 
 				// noinspection unchecked
-				switch (CommandHider2.canUse(commandSource, (RootCommandNode<CommandSource>) root, (CommandNode<CommandSource>) (Object) this, prefix)) {
+				switch (CommandHider.canUse(commandSource, (RootCommandNode<CommandSource>) root, (CommandNode<CommandSource>) (Object) this, prefix)) {
 					case FALSE -> {
 						cir.setReturnValue(false);
 						return;

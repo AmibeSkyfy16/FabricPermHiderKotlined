@@ -7,20 +7,18 @@ import com.mojang.brigadier.tree.RootCommandNode
 import me.lucko.fabric.api.permissions.v0.Permissions
 import net.fabricmc.fabric.api.util.TriState
 import net.fabricmc.loader.impl.FabricLoaderImpl
+import net.minecraft.client.MinecraftClient
 import net.minecraft.command.CommandSource
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.command.CommandManager
-import net.minecraft.server.command.ExecuteCommand
 import net.minecraft.server.command.ServerCommandSource
-import net.minecraft.server.command.TellRawCommand
 import java.util.*
 
-object CommandHider2 {
+object CommandHider {
 
     @JvmStatic
     fun <S : CommandSource> getPrefix(source: S, root: RootCommandNode<S>, node: CommandNode<S>): String? {
         val prefix = findPackageName(source, root, node)
-//        println("PACKAGE NAME: ${findPackageName(source, root, node)}")
         return if (source is ServerCommandSource && Optional.ofNullable(source.server)
                 .map(MinecraftServer::getCommandManager)
                 .map(CommandManager::getDispatcher)
