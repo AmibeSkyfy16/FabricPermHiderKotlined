@@ -1,4 +1,4 @@
-package ch.skyfy.fabricpermhiderkotlined.ducks;
+package ch.skyfy.fabricpermshiderkotlined.ducks;
 
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;

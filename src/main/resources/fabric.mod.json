@@ -1,25 +1,25 @@
 {
   "schemaVersion": 1,
-  "id": "fabricpermhiderkotlined",
+  "id": "fabricpermshiderkotlined",
   "version": "${version}",
-  "name": "FabricPermHiderKotlined",
+  "name": "FabricPermsHiderKotlined",
   "description": "This mod allow player to have homes, they can create them with /createHome <name>",
   "authors": ["Skyfy16"],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/fabricpermhiderkotlined/icon.png",
+  "icon": "assets/fabricpermshiderkotlined/icon.png",
   "environment": "server",
   "entrypoints": {
     "server": [
       {
         "adapter": "kotlin",
-        "value": "ch.skyfy.fabricpermhiderkotlined.FabricPermHiderKotlinedMod"
+        "value": "ch.skyfy.fabricpermshiderkotlined.FabricPermHiderKotlinedMod"
       }
     ],
     "main": []
   },
   "mixins": [
-    "fabricpermhiderkotlined.mixin.json"
+    "fabricpermshiderkotlined.mixin.json"
   ],
   "depends": {
     "fabricloader": ">=0.14.12",

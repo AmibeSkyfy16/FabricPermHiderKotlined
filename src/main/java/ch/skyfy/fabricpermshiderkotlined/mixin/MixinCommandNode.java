@@ -1,8 +1,8 @@
-package ch.skyfy.fabricpermhiderkotlined.mixin;
+package ch.skyfy.fabricpermshiderkotlined.mixin;
 
-import ch.skyfy.fabricpermhiderkotlined.ducks.CommandNodeDuck;
+import ch.skyfy.fabricpermshiderkotlined.ducks.CommandNodeDuck;
 //import ch.skyfy.fabricpermhiderkotlined.utils.CommandHider;
-import ch.skyfy.fabricpermhiderkotlined.utils.CommandHider;
+import ch.skyfy.fabricpermshiderkotlined.utils.CommandHider;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.RedirectModifier;
 import com.mojang.brigadier.tree.CommandNode;

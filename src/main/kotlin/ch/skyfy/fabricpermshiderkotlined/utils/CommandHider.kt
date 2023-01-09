@@ -1,13 +1,12 @@
-package ch.skyfy.fabricpermhiderkotlined.utils;
+package ch.skyfy.fabricpermshiderkotlined.utils;
 
-import ch.skyfy.fabricpermhiderkotlined.ducks.CommandNodeDuck
+import ch.skyfy.fabricpermshiderkotlined.ducks.CommandNodeDuck
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.tree.CommandNode
 import com.mojang.brigadier.tree.RootCommandNode
 import me.lucko.fabric.api.permissions.v0.Permissions
 import net.fabricmc.fabric.api.util.TriState
 import net.fabricmc.loader.impl.FabricLoaderImpl
-import net.minecraft.client.MinecraftClient
 import net.minecraft.command.CommandSource
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.command.CommandManager
