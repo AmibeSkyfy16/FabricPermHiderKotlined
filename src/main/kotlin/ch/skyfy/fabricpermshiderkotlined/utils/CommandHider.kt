@@ -17,13 +17,29 @@ object CommandHider {
 
     @JvmStatic
     fun <S : CommandSource> getPrefix(source: S, root: RootCommandNode<S>, node: CommandNode<S>): String? {
-        val prefix = findPackageName(source, root, node)
-        return if (source is ServerCommandSource && Optional.ofNullable(source.server)
+
+        // NEW CODE ------
+
+//        val prefix = findPackageName(source, root, node)
+//        return if (source is ServerCommandSource && Optional.ofNullable(source.server)
+//                .map(MinecraftServer::getCommandManager)
+//                .map(CommandManager::getDispatcher)
+//                .map { obj: CommandDispatcher<ServerCommandSource> -> obj.root }.equals(Optional.of(root))
+//        ) if(prefix.isEmpty()) "command" else "$prefix:command"
+//        else null
+
+        // NEW CODE ------
+
+
+        // OLD CODE -----
+
+        if (source is ServerCommandSource && Optional.ofNullable(source.server)
                 .map(MinecraftServer::getCommandManager)
                 .map(CommandManager::getDispatcher)
                 .map { obj: CommandDispatcher<ServerCommandSource> -> obj.root }.equals(Optional.of(root))
-        ) if(prefix.isEmpty()) "command" else "$prefix:command"
-        else null
+        ) return "command";
+        return null;
+        // OLD CODE ------
     }
 
     private fun <S : CommandSource> findPackageName(source: S, root: RootCommandNode<S>, node: CommandNode<S>): String {
@@ -42,7 +58,7 @@ object CommandHider {
                     }
                 }
 
-                if (targetSplits[0] == "net" && targetSplits[1] == "minecraft") return "minecraft"
+                if (targetSplits[0] == "net" && targetSplits[1] == "minecraft") return "mc"
             } else {
                 ancestor.children.forEach {
                     return findPackageNameImpl(it)

@@ -33,110 +33,38 @@ public class LiteralCommandNodeMixin {
     @Final
     private String literalLowerCase;
 
-//    @Inject(
-//            method = "<init>",
-//            at = @At(value = "HEAD")
-//    )
-//    private static <S> void init1(String literal, Command<?> command, Predicate<?> requirement, CommandNode<?> redirect, RedirectModifier<?> modifier, boolean forks, CallbackInfo ci) {
-//
-//    }
-
-    private Boolean find(CommandNode<?> cn) {
-        if (cn.getChildren().isEmpty()) {
-//            if (cn.getName().equalsIgnoreCase("mc:gamerule")) {
-//                System.out.println("999 " + cn.getName());
-//                return true;
-//            }
-//            if (cn.getName().equalsIgnoreCase("gamerule")) {
-//                System.out.println("111 " + cn.getName());
-//                return true;
-//            }
-            if (CREATED_ALIASES.containsKey(cn.getName())) {
-                System.out.println("found");
-                return true;
-            }
-        } else {
-            for (CommandNode<?> child : cn.getChildren()) {
-
-                find(child);
-            }
-        }
-        return false;
-    }
 
     @Inject(
             method = "<init>",
             at = @At(value = "TAIL")
     )
-    private <S> void init(String literal, Command<?> command, Predicate<?> requirement, CommandNode<?> redirect, RedirectModifier<?> modifier, boolean forks, CallbackInfo ci) {
-        if(0 == 0)return; // Disable
-
+    private <S> void init(String literal, Command<S> command, Predicate<S> requirement, CommandNode<S> redirect, RedirectModifier<S> modifier, boolean forks, CallbackInfo ci) {
+        if(0 == 0)return; // DISABLED
         this.literal = literal;
         this.literalLowerCase = literal.toLowerCase(Locale.ROOT);
 
-//        if(literal.equalsIgnoreCase("gamerule")){
-//            return;
-//        }
-
-//        if(shouldReturn.get()){
-//            System.out.println("shouldReturn true");
-//            return;
-//        }
-
-//        if (redirect != null) {
-////            if (find(redirect)) {
-////                System.out.println("true returned");
-////                return;
-////            }
-////            shouldReturn.set(true);
-//            System.out.println("redirect not null");
-//            return;
-//        }
-
-        if (CREATED_ALIASES.containsKey(literal)) {
-            System.out.println("GAMRULE !");
-            return;
-        }
-
-
-//        for (CommandAlias alias : Configs.COMMAND_ALIASES.getSerializableData().getAliases()) {
-//            if (alias.getAlias().equalsIgnoreCase(literal)) {
-//                if (CREATED_ALIASES.containsKey(literal)) {
-//                    System.out.println("GAMRULE !");
-//                    return;
-//                }
-//            }
-//        }
-
-//        if (!literal.equalsIgnoreCase("luckperms")) return;
-
-//        System.out.println("\n\n\n");
+        if (CREATED_ALIASES.containsKey(literal)) return;
 
         var foundCommandDispatcher = new AtomicBoolean(false);
         var foundCommandRegistrationCallback = new AtomicBoolean(false);
         var doneForCommandDispatcher = new AtomicBoolean(false);
         var doneForCommandRegistrationCallback = new AtomicBoolean(false);
-        var list = new LinkedList<Class>();
+        var list = new LinkedList<Class<?>>();
         StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE).forEach(stackFrame -> {
-//            if (doneForCommandDispatcher.get() && !foundCommandRegistrationCallback.get()) return;
             list.add(stackFrame.getDeclaringClass());
             if (doneForCommandDispatcher.get()) return;
             if (doneForCommandRegistrationCallback.get()) return;
 
-//            System.out.println("literal: " + literal);
-//            System.out.println("\tstackFrame.getDeclaringClass().getCanonicalName() " + stackFrame.getDeclaringClass().getCanonicalName());
-//            System.out.println("\tstackFrame.getDeclaringClass().getSimpleName() " + stackFrame.getDeclaringClass().getSimpleName());
-//            System.out.println("\tstackFrame.getDeclaringClass().getName() " + stackFrame.getDeclaringClass().getName());
-//            System.out.println("\n");
-
             if (foundCommandDispatcher.get()) {
                 var packageArgs = stackFrame.getDeclaringClass().getPackageName().split("\\.");
                 if (packageArgs[0].equalsIgnoreCase("net") && packageArgs[1].equalsIgnoreCase("minecraft")) {
-                    COMMANDS.put(literal, "mc:" + literal);
-                    this.literal = "mc:" + literal;
+                    var newLiteral = "mc:" + literal;
+                    this.literal = newLiteral;
+                    COMMANDS.put(literal, newLiteral);
                 } else {
-                    COMMANDS.put(literal, packageArgs[0] + ":" + literal);
-                    this.literal = packageArgs[0] + ":" + literal;
+                    var newLiteral = packageArgs[0] + ":" + literal;
+                    this.literal = newLiteral;
+                    COMMANDS.put(literal, newLiteral);
 
                     FabricLoaderImpl.INSTANCE.getModsInternal().forEach(modContainer -> {
                         for (String entrypointKey : modContainer.getMetadata().getEntrypointKeys()) {
@@ -144,13 +72,13 @@ public class LiteralCommandNodeMixin {
                             entryPoint.forEach(entrypointMetadata -> {
                                 var splits = entrypointMetadata.getValue().split("\\.");
                                 if (packageArgs[0].equalsIgnoreCase(splits[0]) && packageArgs[1].equalsIgnoreCase(splits[1])) {
-                                    COMMANDS.put(literal, modContainer.getMetadata().getId() + ":" + literal);
-                                    this.literal = modContainer.getMetadata().getId() + ":" + literal;
+                                    var newLiteral2 = modContainer.getMetadata().getId() + ":" + literal;
+                                    this.literal = newLiteral2;
+                                    COMMANDS.put(literal, newLiteral2);
                                 }
                             });
                         }
                     });
-
                 }
 
                 this.literalLowerCase = literal.toLowerCase(Locale.ROOT);
@@ -158,11 +86,11 @@ public class LiteralCommandNodeMixin {
                 return;
             } else {
                 if (foundCommandRegistrationCallback.get()) {
-//                    list.forEach(aClass -> System.out.println("\t"+aClass));
                     var packageArgs = list.get(list.size() - 3).getPackageName().split("\\.");
-                    COMMANDS.put(literal, packageArgs[2] + ":" + literal);
-                    this.literal = packageArgs[2] + ":" + literal;
+                    var newLiteral = packageArgs[2] + ":" + literal;
+                    this.literal = newLiteral;
                     this.literalLowerCase = literal.toLowerCase(Locale.ROOT);
+                    COMMANDS.put(literal, newLiteral);
 
                     FabricLoaderImpl.INSTANCE.getModsInternal().forEach(modContainer -> {
                         for (String entrypointKey : modContainer.getMetadata().getEntrypointKeys()) {
@@ -170,13 +98,15 @@ public class LiteralCommandNodeMixin {
                             entryPoint.forEach(entrypointMetadata -> {
                                 var splits = entrypointMetadata.getValue().split("\\.");
                                 if (packageArgs[0].equalsIgnoreCase(splits[0]) && packageArgs[1].equalsIgnoreCase(splits[1])) {
-                                    COMMANDS.put(literal, modContainer.getMetadata().getId() + ":" + literal);
-                                    this.literal = modContainer.getMetadata().getId() + ":" + literal;
+                                    var newLiteral2 = modContainer.getMetadata().getId() + ":" + literal;
+                                    this.literal = newLiteral2;
+                                    COMMANDS.put(literal, newLiteral2);
                                 }
                             });
                         }
                     });
 
+                    this.literalLowerCase = literal.toLowerCase(Locale.ROOT);
                     doneForCommandRegistrationCallback.set(true);
                     return;
                 }
@@ -188,6 +118,5 @@ public class LiteralCommandNodeMixin {
         });
         this.literalLowerCase = literal.toLowerCase(Locale.ROOT);
     }
-
 
 }

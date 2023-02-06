@@ -2,7 +2,6 @@ package ch.skyfy.fabricpermshiderkotlined.config
 
 import ch.skyfy.json5configlib.Defaultable
 import ch.skyfy.json5configlib.Validatable
-import io.github.xn32.json5k.SerialComment
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -18,9 +17,11 @@ data class CommandAlias(
 
 class DefaultCommandAliasesConfig : Defaultable<CommandAliasesConfig> {
     override fun getDefault(): CommandAliasesConfig {
-        return CommandAliasesConfig(mutableSetOf(CommandAlias("minecraft:gamerule", "gamerule")))
+        return CommandAliasesConfig(mutableSetOf(
+            CommandAlias("mc:gamerule", "gamerule"),
+            CommandAlias("mc:gamemode", "gamemode")
+        ))
     }
-
 }
 
 

@@ -17,7 +17,7 @@ public class Test {
 
     public static final Map<String, String> CREATED_ALIASES = new HashMap<>();
 
-    public static final AtomicBoolean shouldReturn = new AtomicBoolean(false);
+//    public static final AtomicBoolean shouldReturn = new AtomicBoolean(false);
 
     public static class Data {
         public Class<?> declaringClass;
