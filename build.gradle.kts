@@ -37,9 +37,9 @@ fun DependencyHandlerScope.handleIncludes(project: Project, configuration: Confi
 }
 
 plugins {
-    id("fabric-loom") version "1.0-SNAPSHOT"
-    id("org.jetbrains.kotlin.jvm") version "1.8.0"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.0"
+    id("fabric-loom") version "1.1-SNAPSHOT"
+    id("org.jetbrains.kotlin.jvm") version "1.8.10"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
     idea
 }
 
@@ -66,11 +66,11 @@ dependencies {
     modImplementation("me.lucko:fabric-permissions-api:${properties["fabric_permission_api"]}")?.let { include(it) }
 
     transitiveInclude(implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.4")!!)
-    transitiveInclude(implementation("ch.skyfy.jsonconfiglib:json-config-lib:3.0.12")!!)
+    transitiveInclude(implementation("ch.skyfy.json5configlib:json5-config-lib:1.0.21")!!)
 
     handleIncludes(project, transitiveInclude)
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.0")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
 }
 
 tasks {

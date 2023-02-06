@@ -5,13 +5,19 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Test {
 
     public static final Map<String, Data> MAP = new HashMap<>();
     public static final Map<LiteralArgumentBuilder<?>, Data> MAP2 = new HashMap<>();
-
     public static final Map<LiteralCommandNode<?>, Data2> TEST = new HashMap<>();
+
+    public static final Map<String, String> COMMANDS = new HashMap<>();
+
+    public static final Map<String, String> CREATED_ALIASES = new HashMap<>();
+
+    public static final AtomicBoolean shouldReturn = new AtomicBoolean(false);
 
     public static class Data {
         public Class<?> declaringClass;
