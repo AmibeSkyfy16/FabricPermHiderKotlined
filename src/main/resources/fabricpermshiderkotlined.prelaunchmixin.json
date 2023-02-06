@@ -1,13 +1,13 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "ch.skyfy.fabricpermshiderkotlined.mixin",
+  "package": "ch.skyfy.fabricpermshiderkotlined.prelaunchmixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-
+    "LiteralCommandNodeMixin"
   ],
   "server": [
-    "MixinCommandNode"
+
   ],
   "client": [
   ],
